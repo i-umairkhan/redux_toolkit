@@ -26,8 +26,8 @@ const PostsList = () => {
             <i style={{fontSize:'10px',color:'gray'}}>{getTime(post.date)}</i>
             <div></div>
             <span style={{cursor:'pointer'}} onClick={() => dispatch(addReactions({postId: post.id,reaction : 'like'}))}> 👍 {post.reactions.like}</span> 
-            <span style={{cursor:'pointer'}}> 😂 {post.reactions.haha}</span> 
-            <span style={{cursor:'pointer'}}> 💜 {post.reactions.heart}</span> 
+            <span style={{cursor:'pointer'}} onClick={() => dispatch(addReactions({postId: post.id,reaction : 'haha'}))}> 😂 {post.reactions.haha}</span> 
+            <span style={{cursor:'pointer'}} onClick={() => dispatch(addReactions({postId: post.id,reaction : 'heart'}))}> 💜 {post.reactions.heart}</span> 
             <hr/>
         </article>
         ));
