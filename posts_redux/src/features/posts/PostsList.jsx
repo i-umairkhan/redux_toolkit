@@ -1,10 +1,23 @@
 import {useDispatch, useSelector} from 'react-redux'
-import { selectAllPosts ,addReactions} from './postsSlice'; 
+import { selectAllPosts ,addReactions,getPostError,getPostStatus,fetchPosts} from './postsSlice'; 
 import { parseISO, formatDistanceToNow } from 'date-fns';
+import { useEffect } from 'react';
 
 
 const PostsList = () => {
   const dispatch = useDispatch()
+
+  const posts = useSelector(selectAllPosts);
+  const postStatus = useSelector(getPostStatus);
+  const error = useSelector(getPostError);
+
+  useEffect(()=>{
+    console.log('PostsList')
+    if(postStatus === 'idle'){
+      dispatch(fetchPosts())
+    }
+  },[postStatus])
+
   const getTime= (timestamp) => {
     let timeAgo = ''
     if (timestamp) {
@@ -14,7 +27,6 @@ const PostsList = () => {
     }
     return timeAgo;
   }
-    const posts = useSelector(selectAllPosts);
 
     const orderedPost = posts.slice().sort((a,b)=> b.date.localeCompare(a.date))
 
@@ -34,7 +46,7 @@ const PostsList = () => {
   return (
     <div>
     <h2 style={{color:'navy'}}>Posts</h2>
-     {renderdPost}
+     {      postStatus === 'loading' ? <h1>Loding...</h1> :  renderdPost}
     </div>
   )
 }
